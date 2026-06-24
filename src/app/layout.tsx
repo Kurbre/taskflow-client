@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { Roboto } from 'next/font/google'
 import './assets/globals.css'
 import { Header } from '@/widgets/header'
+import { Footer } from '@/widgets/footer'
 
 const roboto = Roboto({
 	variable: '--font-roboto',
@@ -23,6 +24,7 @@ export default function RootLayout({
 			<body className='min-h-full flex flex-col'>
 				<Header />
 				<main className='flex-1 relative'>{children}</main>
+				<Footer />
 			</body>
 		</html>
 	)
