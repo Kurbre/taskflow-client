@@ -1,12 +1,21 @@
 import type { Metadata } from 'next'
-import { Roboto } from 'next/font/google'
+import { Lobster, Pacifico, Roboto } from 'next/font/google'
 import './assets/globals.css'
 import { Header } from '@/widgets/header'
 import { Footer } from '@/widgets/footer'
+import BackgroundDots from '@/shared/ui/background-dots'
+import { Toaster } from 'sonner'
+import RootProvider from './providers/root.provider'
 
 const roboto = Roboto({
 	variable: '--font-roboto',
-	subsets: ['latin']
+	subsets: ['latin', 'cyrillic']
+})
+
+const pacifico = Pacifico({
+	variable: '--font-pacifico',
+	weight: ['400'],
+	subsets: ['latin', 'cyrillic']
 })
 
 export const metadata: Metadata = {
@@ -20,11 +29,20 @@ export default function RootLayout({
 	children: React.ReactNode
 }>) {
 	return (
-		<html lang='en' className={`${roboto.variable} h-full antialiased`}>
+		<html
+			lang='en'
+			className={`${roboto.variable} ${pacifico.variable} h-full antialiased`}
+		>
 			<body className='min-h-full flex flex-col'>
-				<Header />
-				<main className='flex-1 relative'>{children}</main>
-				<Footer />
+				<RootProvider>
+					<Header />
+					<main className='flex-1 relative flex flex-col'>
+						<BackgroundDots />
+						{children}
+					</main>
+					<Footer />
+					<Toaster />
+				</RootProvider>
 			</body>
 		</html>
 	)

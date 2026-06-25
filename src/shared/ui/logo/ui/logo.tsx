@@ -22,7 +22,7 @@ export default function Logo({ size = 'lg' }: LogoProps) {
 	}
 
 	return (
-		<Link href='/' draggable={false} className='flex items-center gap-3'>
+		<Link href='/' draggable={false} className='flex items-center gap-3 w-fit'>
 			<Image
 				src={logoImage}
 				alt={logoImage.src}

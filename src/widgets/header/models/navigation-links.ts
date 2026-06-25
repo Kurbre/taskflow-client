@@ -10,7 +10,13 @@ type NavigationLink = {
 export const navigationLinks: NavigationLink[] = [
 	{
 		label: 'Возможности',
-		href: '/'
+		href: '/',
+		items: [
+			{
+				href: '/',
+				label: '123'
+			}
+		]
 	},
 	{
 		label: 'О компании',
