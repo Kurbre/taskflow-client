@@ -1,6 +1,6 @@
 'use client'
 
-import { useAuth } from '@/entities/user'
+import { useAuth, UserInfo } from '@/entities/user'
 import { useLogoutMutation } from '@/features/auth/logout'
 import { Avatar, AvatarFallback, AvatarImage } from '@/shared/ui/avatar'
 import { Button } from '@/shared/ui/button'
@@ -15,7 +15,7 @@ import { LogOut } from 'lucide-react'
 import Link from 'next/link'
 
 export default function HeaderButtons() {
-	const { isAuth, user, isLoading } = useAuth()
+	const { isAuth, isLoading } = useAuth()
 
 	const { mutate, isPending } = useLogoutMutation()
 
@@ -28,14 +28,8 @@ export default function HeaderButtons() {
 			) : isAuth ? (
 				<>
 					<DropdownMenu modal={false}>
-						<DropdownMenuTrigger asChild>
-							<div className='flex items-center gap-2 cursor-pointer'>
-								<Avatar size='lg'>
-									<AvatarImage src={user?.avatarPath} />
-									<AvatarFallback>{user?.email}</AvatarFallback>
-								</Avatar>
-								<span>{user?.email}</span>
-							</div>
+						<DropdownMenuTrigger>
+							<UserInfo />
 						</DropdownMenuTrigger>
 						<DropdownMenuContent>
 							<DropdownMenuItem

@@ -5,10 +5,14 @@ import Link from 'next/link'
 import { confirmRegisterRequest } from '../api/confirm-register.api'
 import { useEffect, useState } from 'react'
 import { notFound, useRouter } from 'next/navigation'
+import { useQueryClient } from '@tanstack/react-query'
+import { authKeys } from '@/shared/config/variables'
+import { toast } from 'sonner'
 
 export default function ConfirmRegisterCard({ token }: { token: string }) {
 	const router = useRouter()
 	const [isLoading, setIsLoading] = useState(true)
+	const queryClient = useQueryClient()
 
 	useEffect(() => {
 		let isMounted = true
@@ -21,7 +25,13 @@ export default function ConfirmRegisterCard({ token }: { token: string }) {
 
 				if (!data.accessToken) router.replace('/not-found')
 
+				queryClient.setQueryData(authKeys.me, data.user)
+
 				localStorage.setItem('accessToken', data.accessToken)
+
+				toast.success('Вы успешно зарегестрировались')
+
+				router.replace('/')
 			} catch {
 				if (!isMounted) return
 
@@ -42,20 +52,5 @@ export default function ConfirmRegisterCard({ token }: { token: string }) {
 		}
 	}, [token])
 
-	return isLoading ? (
-		<span>Загрузка...</span>
-	) : (
-		<Card className='w-full max-w-[400px]'>
-			<CardTitle className='px-4'>Регистрация успешна</CardTitle>
-			<CardContent className='flex flex-col items-center gap-5'>
-				<span>
-					Вы успешно зарегестрировались, вы можете перейти в профиль по кнопку
-					ниже
-				</span>
-				<Link href='/profile' className='w-full'>
-					<Button className='w-full'>Профиль</Button>
-				</Link>
-			</CardContent>
-		</Card>
-	)
+	return isLoading && <span>Загрузка...</span>
 }
