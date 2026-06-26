@@ -5,11 +5,9 @@ import { authKeys } from '@/shared/config/variables'
 
 export const useAuth = () => {
 	const [isMounted, setIsMounted] = useState(false)
-	const [hasAccessToken, setHasAccessToken] = useState(false)
 
 	useEffect(() => {
 		setIsMounted(true)
-		setHasAccessToken(!!localStorage.getItem('accessToken'))
 	}, [])
 
 	const mutation = useQuery({
@@ -18,7 +16,7 @@ export const useAuth = () => {
 		staleTime: 5 * 60 * 1000,
 		gcTime: 30 * 60 * 1000,
 		refetchOnWindowFocus: false,
-		enabled: hasAccessToken,
+		enabled: isMounted,
 		retry: false
 	})
 

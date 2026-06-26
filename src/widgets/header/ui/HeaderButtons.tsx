@@ -19,13 +19,17 @@ export default function HeaderButtons() {
 
 	const { mutate, isPending } = useLogoutMutation()
 
+	if (isLoading)
+		return (
+			<div className='flex items-center gap-2'>
+				<Skeleton className='w-[40px] h-[40px] rounded-full' />
+				<Skeleton className='w-[150px] h-[24] rounded-md' />
+			</div>
+		)
+
 	return (
 		<div className='flex items-center gap-5'>
-			{isLoading ? (
-				<>
-					<Skeleton className='w-[150px] h-[50px]' />
-				</>
-			) : isAuth ? (
+			{isAuth ? (
 				<>
 					<DropdownMenu modal={false}>
 						<DropdownMenuTrigger>
