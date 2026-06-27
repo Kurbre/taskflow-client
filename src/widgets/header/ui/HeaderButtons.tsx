@@ -46,12 +46,15 @@ export default function HeaderButtons() {
 							</DropdownMenuItem>
 						</DropdownMenuContent>
 					</DropdownMenu>
+					<Link href='/board'>
+						<Button>Перейти в доску</Button>
+					</Link>
 				</>
 			) : (
 				<>
 					<Link href='/auth/login'>Войти</Link>
 					<Link href='/auth/register'>
-						<Button size='lg'>Присоедениться к нам</Button>
+						<Button>Присоедениться к нам</Button>
 					</Link>
 				</>
 			)}
