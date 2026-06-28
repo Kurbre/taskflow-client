@@ -24,6 +24,7 @@ export default function HeaderButtons() {
 			<div className='flex items-center gap-2'>
 				<Skeleton className='w-[40px] h-[40px] rounded-full' />
 				<Skeleton className='w-[150px] h-[24] rounded-md' />
+				<Skeleton className='w-[130px] h-[32] rounded-md' />
 			</div>
 		)
 
