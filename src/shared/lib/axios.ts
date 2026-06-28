@@ -14,6 +14,11 @@ export const axiosMain = axios.create({
 	withCredentials: true
 })
 
+export const axiosServer = axios.create({
+	baseURL: process.env.NEXT_PUBLIC_API_URL,
+	withCredentials: true
+})
+
 axiosMain.interceptors.request.use(config => {
 	const token = localStorage.getItem('accessToken')
 
