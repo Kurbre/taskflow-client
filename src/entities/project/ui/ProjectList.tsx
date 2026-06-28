@@ -20,7 +20,7 @@ export default function ProjectList() {
 		)
 
 	return (
-		<div className='flex gap-5 flex-wrap'>
+		<div className='flex gap-5 flex-wrap items-stretch'>
 			{data?.map(project => (
 				<Link key={`project-item-${project.id}`} href={`/board/${project.id}`}>
 					<ProjectItem project={project} />

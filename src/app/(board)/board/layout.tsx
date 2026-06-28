@@ -11,7 +11,7 @@ export default function BoardLayout({ children }: PropsWithChildren) {
 			<Header />
 			<main className='flex-1 relative flex flex-col'>
 				<BackgroundDots />
-				<div className='flex gap-5 min-h-[calc(100vh-180px)]'>
+				<div className='flex min-h-[calc(100vh-180px)]'>
 					<BoardSidebar />
 					<div className='flex flex-col py-4 gap-4 w-full container'>
 						{children}

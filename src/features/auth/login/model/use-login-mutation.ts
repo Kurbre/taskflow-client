@@ -25,6 +25,11 @@ export const useLoginMutation = () => {
 				router.push('/')
 				router.refresh()
 			}
+		},
+		onError: error => {
+			console.log(error)
+
+			toast.error(error.message)
 		}
 	})
 

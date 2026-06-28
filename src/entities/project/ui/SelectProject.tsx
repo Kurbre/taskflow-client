@@ -38,9 +38,11 @@ export default function SelectProject() {
 						<SelectItem value={project.id}>{project.title}</SelectItem>
 					</Link>
 				))}
-				<SelectItem value='new'>
-					<Plus /> Создать новый проект
-				</SelectItem>
+				<Link href='/board/new'>
+					<SelectItem value='new'>
+						<Plus /> Создать новый проект
+					</SelectItem>
+				</Link>
 			</SelectContent>
 		</Select>
 	)

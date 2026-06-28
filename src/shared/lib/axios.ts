@@ -1,4 +1,5 @@
 import axios, { InternalAxiosRequestConfig } from 'axios'
+import { isPublicRoute } from '../lib/is-public-route'
 
 type AuthResponse = {
 	accessToken: string
@@ -33,7 +34,11 @@ axiosMain.interceptors.response.use(
 		const isUnauthorized = error.response?.status === 401
 		const isRefreshRequest = originalRequest.url?.includes('/auth/refresh')
 
-		if (isUnauthorized && !originalRequest._retry && !isRefreshRequest) {
+		if (originalRequest._retry || isPublicRoute(originalRequest.url)) {
+			return Promise.reject(error)
+		}
+
+		if (isUnauthorized && !isRefreshRequest) {
 			originalRequest._retry = true
 
 			try {
