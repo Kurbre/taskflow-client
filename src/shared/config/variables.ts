@@ -3,5 +3,6 @@ export const authKeys = {
 }
 
 export const projectsKey = {
-	me: ['projects', 'me'] as const
+	me: ['projects', 'me'] as const,
+	projects: ['projects'] as const
 }

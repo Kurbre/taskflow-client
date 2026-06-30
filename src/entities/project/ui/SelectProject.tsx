@@ -8,14 +8,32 @@ import {
 } from '@/shared/ui/select'
 import { useProjectsMeQuery } from '../model/use-projects-me-query'
 import { useEffect, useState } from 'react'
-import { Plus } from 'lucide-react'
+import { ArrowDown, ChevronDown, Plus } from 'lucide-react'
 import Link from 'next/link'
 import { Skeleton } from '@/shared/ui/skeleton'
+import {
+	DropdownMenu,
+	DropdownMenuContent,
+	DropdownMenuItem,
+	DropdownMenuTrigger
+} from '@/shared/ui/dropdown-menu'
+import { Button } from '@/shared/ui/button'
+import { usePathname } from 'next/navigation'
+import { useProjectFindByIdQuery } from '../model/use-project-find-by-id-query'
+import { cn } from '@/shared/lib/utils'
 
 export default function SelectProject() {
 	const [isMounted, setIsMounted] = useState(false)
 	const [isOpen, setIsOpen] = useState(false)
 	const { data, isPending } = useProjectsMeQuery()
+
+	const pathName = usePathname()
+
+	const id = pathName.includes('/board/')
+		? pathName.split('/board/')[1]
+		: undefined
+
+	const selectedProject = data?.find(i => i.id === id)
 
 	useEffect(() => {
 		setIsMounted(true)
@@ -26,24 +44,36 @@ export default function SelectProject() {
 	}
 
 	return (
-		<Select open={isOpen} onOpenChange={setIsOpen}>
-			<SelectTrigger className='w-full' disabled={isPending}>
-				<SelectValue
-					placeholder={isPending ? 'Загрузка...' : 'Выберите проект'}
-				/>
-			</SelectTrigger>
-			<SelectContent position='popper'>
+		<DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
+			<DropdownMenuTrigger className='w-full' disabled={isPending} asChild>
+				<Button variant='outline' className='justify-between'>
+					{isPending
+						? 'Загрузка...'
+						: selectedProject
+							? selectedProject.title
+							: 'Выберите проект'}
+					<ChevronDown
+						className={cn(
+							'transition-transform duration-200 ease-in',
+							isOpen && 'rotate-180'
+						)}
+					/>
+				</Button>
+			</DropdownMenuTrigger>
+			<DropdownMenuContent>
 				{data?.map(project => (
 					<Link href={`/board/${project.id}`} key={project.id}>
-						<SelectItem value={project.id}>{project.title}</SelectItem>
+						<DropdownMenuItem className='cursor-pointer'>
+							{project.title}
+						</DropdownMenuItem>
 					</Link>
 				))}
 				<Link href='/board/new'>
-					<SelectItem value='new'>
+					<DropdownMenuItem className='cursor-pointer'>
 						<Plus /> Создать новый проект
-					</SelectItem>
+					</DropdownMenuItem>
 				</Link>
-			</SelectContent>
-		</Select>
+			</DropdownMenuContent>
+		</DropdownMenu>
 	)
 }
