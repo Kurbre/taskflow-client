@@ -25,6 +25,7 @@ import { cn } from '@/shared/lib/utils'
 export default function SelectProject() {
 	const [isMounted, setIsMounted] = useState(false)
 	const [isOpen, setIsOpen] = useState(false)
+
 	const { data, isPending } = useProjectsMeQuery()
 
 	const pathName = usePathname()
