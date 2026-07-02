@@ -18,9 +18,11 @@ import {
 	DropdownMenuTrigger
 } from '@/shared/ui/dropdown-menu'
 import { Button } from '@/shared/ui/button'
-import { usePathname } from 'next/navigation'
+import { useParams, usePathname } from 'next/navigation'
 import { useProjectFindByIdQuery } from '../model/use-project-find-by-id-query'
 import { cn } from '@/shared/lib/utils'
+import { getProjectParamId } from '../lib/get-project-param-id'
+import { BoardParams } from '@/shared/model/board-params.type'
 
 export default function SelectProject() {
 	const [isMounted, setIsMounted] = useState(false)
@@ -28,11 +30,7 @@ export default function SelectProject() {
 
 	const { data, isPending } = useProjectsMeQuery()
 
-	const pathName = usePathname()
-
-	const id = pathName.includes('/board/')
-		? pathName.split('/board/')[1]
-		: undefined
+	const { id } = useParams<BoardParams>()
 
 	const selectedProject = data?.find(i => i.id === id)
 

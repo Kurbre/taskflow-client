@@ -6,3 +6,7 @@ export const projectsKey = {
 	me: ['projects', 'me'] as const,
 	projects: ['projects'] as const
 }
+
+export const workspacesKey = {
+	workspaces: ['workspaces', 'me'] as const
+}
